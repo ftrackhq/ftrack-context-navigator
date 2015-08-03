@@ -90,6 +90,7 @@ class ContextDock(QtGui.QWidget):
             self.get_button(i, item)
 
         self.execute(len(hierarchy) - 1)
+        self.clamp_buttons(len(hierarchy) - 1)
 
 
 class RootButton(QtGui.QPushButton):

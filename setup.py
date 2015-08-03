@@ -34,11 +34,17 @@ class Build(build):
         build.run(self)
 
 setup(
+    name='efesto-mcontextpicker',
+    version='0.1.0',
+    description='Maya context picker.',
+    url='http://www.efestolab.uk/',
+    author='EfestoLab LTD',
+    author_email='info@efestolab.uk',
     packages=find_packages(source_dir),
     package_dir={
         '': 'source'
     },
     cmdclass={
         'build': Build,
-    }
+    },
 )
