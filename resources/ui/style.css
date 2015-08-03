@@ -1,0 +1,12 @@
+RootButton, ContextButton {
+    background: #2c2c2c;
+    border-radius: 2px;
+}
+
+RootButton {
+    border-image: url(':/efesto/logo') 0 0 0 0 stretch stretch;
+    color: white;
+}
+ContextButton {
+    font-weight: bold;
+}

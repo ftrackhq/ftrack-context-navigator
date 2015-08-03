@@ -1,3 +1,5 @@
+import os
+import sys
 from PySide import QtGui
 from maya import OpenMayaUI as omui
 from shiboken import wrapInstance
@@ -32,3 +34,38 @@ def hide_maya_help_button():
 def append_toolbox_widget(widget):
     layout_placeholder = get_widget('flowLayout2')
     layout_placeholder.layout().addWidget(widget)
+
+
+def discover_ifaces():
+    interfaces = []
+
+    for path in sys.path:
+        if not os.path.isdir(path):
+            continue
+        for module in os.listdir(path):
+            if 'egg' in module or 'dist' in module:
+                module = module.split('-')[0]
+            module = module.split('.')[0]
+            if module.startswith('ctx_'):
+                module = module[4:]
+                interfaces.append(module)
+
+    return interfaces
+
+
+def import_module(module):
+    _module = None
+    try:
+        _module = __import__(module)
+    except:
+        pass
+    return _module
+
+
+class InterfacePicker(object):
+    @staticmethod
+    def get(name):
+        interfaces = discover_ifaces()
+        if name not in interfaces:
+            raise ValueError()
+        return import_module('ctx_%s' % name).IFACE

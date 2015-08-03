@@ -1,22 +1,18 @@
-import ftrack
-import os
+class ContextInterface(object):
+    def get_root_context(self):
+        raise NotImplementedError()
 
+    def get_context_data(self, hierarchy):
+        raise NotImplementedError()
 
-class FtrackContextManager(object):
+    def get_children(self, data):
+        raise NotImplementedError()
 
-    def get_context_object(self, hierarchy):
-        obj = ftrack.getFromPath(hierarchy)
-        return obj
+    def get_label(self, data):
+        raise NotImplementedError()
 
-    def get_children(self, obj):
-        result = [x.getName() for x in obj.getChildren()]
-        result = result or [x.getName() for x in obj.getTasks()]
-        return result
+    def execute(self, hierarchy):
+        raise NotImplementedError()
 
-    def get_label(self, obj):
-        return obj.dict.get('fullname') or obj.getName()
-
-    def apply_global_context(self, hierarchy):
-        obj = self.get_context_object(hierarchy)
-        if obj.dict.get('entityType') == 'task':
-            os.environ['FTRACK_TASKID'] = obj.getId()
+    def can_be_bookmark(self, hierarchy):
+        raise NotImplementedError()
