@@ -223,11 +223,6 @@ class RootButton(QtGui.QPushButton):
         super(RootButton, self).mousePressEvent(event)
 
     def on_menu_click(self, value):
-        '''On click, this func will be triggered, a new button will be
-        retrieved, the buttons will be clamped to the new spawned button,
-        and the :func:`ContextDock.execute` will be executed with the new
-        button as argument.
-        '''
         value = value.text()
         if 'all' in value:
             self.dock.bookmarks = set()
@@ -240,11 +235,6 @@ class RootButton(QtGui.QPushButton):
         self.refresh_bookmarks()
 
     def build_menu_items(self):
-        '''Adds all children to its contextual menu.
-
-        :returns: The number of children the button has.
-        :rtype: int
-        '''
         actions = ['Clear current bookmarks', 'Clean all bookmarks']
         self.context_menu.clear()
 
