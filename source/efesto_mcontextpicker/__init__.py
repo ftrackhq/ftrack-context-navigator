@@ -4,6 +4,8 @@ from efesto_mcontextpicker import widgets
 
 
 def main(main_context=None, iface_name='filesystem'):
+    '''Main function.
+    '''
     dock = utils.get_widget('efesto-ctxpick')
     if dock:
         dock.setParent(None)
@@ -14,7 +16,7 @@ def main(main_context=None, iface_name='filesystem'):
     if not iface_name:
         raise ValueError('A')
 
-    iface = utils.InterfacePicker.get(iface_name)
+    iface = utils.get_interface(iface_name)
 
     ctx_manager = iface()
     main_context = main_context or ctx_manager.get_root_context()
