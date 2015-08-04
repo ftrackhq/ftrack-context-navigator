@@ -1,12 +1,20 @@
 import os
 import sys
 from PySide import QtGui
+from pprint import pformat
 try:
     # Sphinx
     from maya import OpenMayaUI as omui
     from shiboken import wrapInstance
 except:
     pass
+
+try:
+    import efesto_logger as logging
+except:
+    import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_widget(widget_name, query_type=None, wrapper=None):
@@ -29,6 +37,8 @@ def get_widget(widget_name, query_type=None, wrapper=None):
     '''
     wrapper = wrapper or QtGui.QWidget
 
+    logger.debug('Retrieving widget "%s"' % widget_name)
+
     _type_map = {
         'control': omui.MQtUtil.findControl,
         'layout': omui.MQtUtil.findLayout,
@@ -49,6 +59,7 @@ def get_widget(widget_name, query_type=None, wrapper=None):
 def hide_maya_help_button():
     '''Hides Maya Toolbox help button.
     '''
+    logger.debug('Hiding Maya help button.')
     widget = get_widget('mayaWebButton')
     widget.hide()
 
@@ -59,6 +70,8 @@ def append_toolbox_widget(widget):
     :param widget: Widget to append to Maya's Toolbox
     :type widget: :class:`PySide.QtGui.QWidget` based class.
     '''
+
+    logger.debug('Appending "%s" to Maya Toolbox' % widget.objectName())
     layout_placeholder = get_widget('flowLayout2')
     layout_placeholder.layout().addWidget(widget)
 
@@ -83,6 +96,7 @@ def discover_ifaces():
                 module = module[4:]
                 interfaces.append(module)
 
+    logger.debug('Interfaces found %s' % interfaces)
     return interfaces
 
 
@@ -98,7 +112,7 @@ def import_module(module):
     try:
         return __import__(module)
     except Exception as e:
-        print 'Could not import %s: %s' % (module, e)
+        logger.warning('Could not import %s: %s' % (module, e))
 
 
 def get_interface(name):

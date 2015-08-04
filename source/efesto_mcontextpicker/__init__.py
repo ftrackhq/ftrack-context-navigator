@@ -1,6 +1,21 @@
 import os
 from efesto_mcontextpicker import utils
 from efesto_mcontextpicker import widgets
+import sys
+
+try:
+    import efesto_logger as logging
+except:
+    import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    level = logging.INFO if not os.getenv('EFESTO_DEBUG') else logging.DEBUG
+    handler.setLevel(level)
+    logger.addHandler(handler)
 
 
 def main(iface_name='filesystem', main_context=None):

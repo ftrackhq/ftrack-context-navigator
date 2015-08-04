@@ -9,4 +9,5 @@ RootButton {
 }
 ContextButton {
     font-weight: bold;
+    font-size: 9px;
 }

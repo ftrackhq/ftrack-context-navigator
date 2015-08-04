@@ -5,6 +5,12 @@ try:
 except:
     pass
 import re
+try:
+    import efesto_logger as logging
+except:
+    import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ContextDock(QtGui.QWidget):
@@ -21,16 +27,16 @@ class ContextDock(QtGui.QWidget):
 
         self.settings = QtCore.QSettings('EfestoLab', 'context_picker')
         self.bookmarks = set()
+        self.buttons = []
 
         size = self.settings.beginReadArray("bookmarks")
         for i in range(size):
             self.settings.setArrayIndex(i)
-            self.bookmarks.add(tuple(self.settings.value("key")))
+            value = self.settings.value("key")
+            logger.debug('Reading bookmark from settings: %s' % value)
+            self.bookmarks.add(tuple(value))
 
         self.settings.endArray()
-
-        self.root_btn = RootButton(self)
-        self.main_layout.addWidget(self.root_btn)
 
         self.button_widget = QtGui.QWidget(self)
         self.button_layout = QtGui.QVBoxLayout()
@@ -39,13 +45,14 @@ class ContextDock(QtGui.QWidget):
         self.button_layout.setSpacing(3)
         self.main_layout.addWidget(self.button_widget)
 
-        self.buttons = []
-
         self.ctx_manager = ctx_manager
         if isinstance(main_context, basestring):
             self.get_button(0, main_context)
         elif isinstance(main_context, list):
             self.set_full_context(main_context)
+
+        self.root_btn = RootButton(self)
+        self.main_layout.insertWidget(0, self.root_btn)
 
         fileObject = QtCore.QFile(':/efesto/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
@@ -93,8 +100,12 @@ class ContextDock(QtGui.QWidget):
         :param context: Context to apply to the button.
         :type context: str
 
-
         '''
+
+        logger.debug(
+            'Getting button in index %s: Context %s' % (index, context)
+        )
+        logger.debug('Current buttons: %s' % [x.ctx for x in self.buttons])
         try:
             btn = self.buttons[index]
         except IndexError:
@@ -111,6 +122,8 @@ class ContextDock(QtGui.QWidget):
         :param index: Any button over this value, will be hidden.
         :type index: int
         '''
+
+        logger.debug('Clamping buttons to index: %s' % index)
         for i, btn in enumerate(self.buttons):
             if i > index:
                 btn.hide()
@@ -151,11 +164,19 @@ class ContextDock(QtGui.QWidget):
             return
 
         self.bookmarks.add(tuple(btn.hierarchy))
+        self.save_bookmarks()
         self.root_btn.refresh_bookmarks()
+
+    def save_bookmarks(self):
+        if not self.bookmarks:
+            self.settings.remove('bookmarks')
+            return
+
         self.settings.beginWriteArray("bookmarks")
 
         for idx, value in enumerate(self.bookmarks):
             self.settings.setArrayIndex(idx)
+            logger.debug('Writting bookmark to settings: %s' % list(value))
             self.settings.setValue("key", value)
 
         self.settings.endArray()
@@ -168,6 +189,8 @@ class ContextDock(QtGui.QWidget):
         :param hierarchy: Hierarchy to set the buttons to.
         :type hierarchy: list of str
         '''
+
+        logger.debug('Setting full context: %s' % hierarchy)
         for i, item in enumerate(hierarchy):
             self.get_button(i, item)
 
@@ -187,6 +210,47 @@ class RootButton(QtGui.QPushButton):
         self.clicked.connect(self.refresh_bookmarks)
         self.refresh_bookmarks()
 
+        self.context_menu = QtGui.QMenu()
+        self.context_menu.triggered.connect(self.on_menu_click)
+
+    def mousePressEvent(self, event):
+        '''Qt class override to spawn custom contextual menu.
+        '''
+        if event.button() == QtCore.Qt.MouseButton.RightButton:
+            self.build_menu_items()
+            cursor = QtGui.QCursor()
+            self.context_menu.exec_(cursor.pos())
+        super(RootButton, self).mousePressEvent(event)
+
+    def on_menu_click(self, value):
+        '''On click, this func will be triggered, a new button will be
+        retrieved, the buttons will be clamped to the new spawned button,
+        and the :func:`ContextDock.execute` will be executed with the new
+        button as argument.
+        '''
+        value = value.text()
+        if 'all' in value:
+            self.dock.bookmarks = set()
+        else:
+            for bk in list(reversed(list(self.dock.bookmarks))):
+                if bk[0] == self.dock.buttons[0].ctx:
+                    self.dock.bookmarks.remove(bk)
+
+        self.dock.save_bookmarks()
+        self.refresh_bookmarks()
+
+    def build_menu_items(self):
+        '''Adds all children to its contextual menu.
+
+        :returns: The number of children the button has.
+        :rtype: int
+        '''
+        actions = ['Clear current bookmarks', 'Clean all bookmarks']
+        self.context_menu.clear()
+
+        for action in actions:
+            self.context_menu.addAction(action)
+
     def build_bookmarks(self):
         '''Creates the menu and connects it to the button.
         '''
@@ -199,6 +263,8 @@ class RootButton(QtGui.QPushButton):
         '''
         self.bookmarks_menu.clear()
         for i in self.dock.bookmarks:
+            if i[0] != self.dock.buttons[0].ctx:
+                continue
             self.bookmarks_menu.addAction(':'.join(i))
 
     def on_bookmark_action(self, value):
@@ -219,7 +285,7 @@ class ContextButton(QtGui.QPushButton):
         :param parent: Qt parent
         '''
         super(ContextButton, self).__init__(parent=parent)
-        self.setMinimumHeight(34)
+        self.setMinimumHeight(20)
         self.setMinimumWidth(34)
 
         self.setText(ctx)
@@ -260,21 +326,22 @@ class ContextButton(QtGui.QPushButton):
         self._ctx_data = self.ctx_manager.get_context_data(self.hierarchy)
         label = self.ctx_manager.get_label(self._ctx_data)
         self.setToolTip(label)
-        if len(label) > 5:
+        short_label = []
+        if len(label) > 4:
             items = re.findall(r'[a-zA-Z\d]+', label)
-            seq = []
-            for i in items:
-                if i.isdigit():
-                    seq.append(i)
-                else:
-                    seq.append(i[0].upper())
-
-            seq = ''.join(seq)
-            if len(seq) > 5:
-                seq = seq[:4]
+            if len(items) > 1:
+                for i in items:
+                    if i.isdigit():
+                        short_label.append(i)
+                    else:
+                        short_label.append(i[0].upper())
+            else:
+                short_label = [items[0][:4].upper()]
         else:
-            seq = label
-        self.setText(seq)
+            short_label = [label.upper()]
+
+        short_label = ''.join(short_label)
+        self.setText(short_label)
 
     def get_hierarchy(self):
         ''':returns: the hierarchy of itself, based on the buttons that precede
