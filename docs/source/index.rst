@@ -11,8 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction
+   develop
    modules
-
 
 
 Indices and tables
