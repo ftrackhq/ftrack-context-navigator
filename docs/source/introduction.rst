@@ -2,7 +2,7 @@ Introduction
 ============
 
 
-What is all this about?
+What's all this about?
 -----------------------
 
 This tool aims to ease the workflow in productions where artists have to be switching from one shot/sequence/asset/task to another frequently. The main idea of this software is to be able to change context at any time in a easy and fast way, thus avoiding unnecessary and repetitive actions.
