@@ -19,6 +19,16 @@ class ContextDock(QtGui.QWidget):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(3)
 
+        self.settings = QtCore.QSettings('EfestoLab', 'context_picker')
+        self.bookmarks = set()
+
+        size = self.settings.beginReadArray("bookmarks")
+        for i in range(size):
+            self.settings.setArrayIndex(i)
+            self.bookmarks.add(tuple(self.settings.value("key")))
+
+        self.settings.endArray()
+
         self.root_btn = RootButton(self)
         self.main_layout.addWidget(self.root_btn)
 
@@ -30,7 +40,6 @@ class ContextDock(QtGui.QWidget):
         self.main_layout.addWidget(self.button_widget)
 
         self.buttons = []
-        self.bookmarks = set()
 
         self.ctx_manager = ctx_manager
         if isinstance(main_context, basestring):
@@ -143,6 +152,13 @@ class ContextDock(QtGui.QWidget):
 
         self.bookmarks.add(tuple(btn.hierarchy))
         self.root_btn.refresh_bookmarks()
+        self.settings.beginWriteArray("bookmarks")
+
+        for idx, value in enumerate(self.bookmarks):
+            self.settings.setArrayIndex(idx)
+            self.settings.setValue("key", value)
+
+        self.settings.endArray()
 
     def set_full_context(self, hierarchy):
         '''Creates a set of buttons based in a specified hierarchy. Clamps the
@@ -169,6 +185,7 @@ class RootButton(QtGui.QPushButton):
         self.dock = parent
         self.build_bookmarks()
         self.clicked.connect(self.refresh_bookmarks)
+        self.refresh_bookmarks()
 
     def build_bookmarks(self):
         '''Creates the menu and connects it to the button.
