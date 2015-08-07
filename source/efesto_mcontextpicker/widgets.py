@@ -45,14 +45,15 @@ class ContextDock(QtGui.QWidget):
         self.button_layout.setSpacing(3)
         self.main_layout.addWidget(self.button_widget)
 
+        self.root_btn = RootButton(self)
+        self.main_layout.insertWidget(0, self.root_btn)
+
         self.ctx_manager = ctx_manager
         if isinstance(main_context, basestring):
             self.get_button(0, main_context)
         elif isinstance(main_context, list):
             self.set_full_context(main_context)
 
-        self.root_btn = RootButton(self)
-        self.main_layout.insertWidget(0, self.root_btn)
 
         fileObject = QtCore.QFile(':/efesto/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
