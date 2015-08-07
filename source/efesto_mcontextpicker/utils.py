@@ -1,7 +1,6 @@
 import os
 import sys
 from PySide import QtGui
-from pprint import pformat
 try:
     # Sphinx
     from maya import OpenMayaUI as omui
