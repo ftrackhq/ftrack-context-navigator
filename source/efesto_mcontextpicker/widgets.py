@@ -51,9 +51,9 @@ class ContextDock(QtGui.QWidget):
         self.ctx_manager = ctx_manager
         if isinstance(main_context, basestring):
             self.get_button(0, main_context)
+
         elif isinstance(main_context, list):
             self.set_full_context(main_context)
-
 
         fileObject = QtCore.QFile(':/efesto/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
@@ -161,6 +161,7 @@ class ContextDock(QtGui.QWidget):
 
         if not btn.build_menu_items() == 0:
             return
+
         if not self.ctx_manager.can_be_bookmark(btn.hierarchy):
             return
 
@@ -253,7 +254,7 @@ class RootButton(QtGui.QPushButton):
         '''Refreshes the bookmarks on the current menu.
         '''
         self.bookmarks_menu.clear()
-        for i in self.dock.bookmarks:
+        for i in self.dock.bookmarks and self.dock.buttons:
             if i[0] != self.dock.buttons[0].ctx:
                 continue
             self.bookmarks_menu.addAction(':'.join(i))
