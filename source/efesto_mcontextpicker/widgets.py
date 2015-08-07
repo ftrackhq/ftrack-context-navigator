@@ -55,6 +55,8 @@ class ContextDock(QtGui.QWidget):
         elif isinstance(main_context, list):
             self.set_full_context(main_context)
 
+        self.root_btn.refresh_bookmarks()
+
         fileObject = QtCore.QFile(':/efesto/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
         stream = QtCore.QTextStream(fileObject)
@@ -210,7 +212,6 @@ class RootButton(QtGui.QPushButton):
         self.dock = parent
         self.build_bookmarks()
         self.clicked.connect(self.refresh_bookmarks)
-        self.refresh_bookmarks()
 
         self.context_menu = QtGui.QMenu()
         self.context_menu.triggered.connect(self.on_menu_click)
@@ -254,7 +255,7 @@ class RootButton(QtGui.QPushButton):
         '''Refreshes the bookmarks on the current menu.
         '''
         self.bookmarks_menu.clear()
-        for i in self.dock.bookmarks and self.dock.buttons:
+        for i in self.dock.bookmarks:
             if i[0] != self.dock.buttons[0].ctx:
                 continue
             self.bookmarks_menu.addAction(':'.join(i))
