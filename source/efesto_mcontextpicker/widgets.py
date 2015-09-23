@@ -45,14 +45,17 @@ class ContextDock(QtGui.QWidget):
         self.button_layout.setSpacing(3)
         self.main_layout.addWidget(self.button_widget)
 
+        self.root_btn = RootButton(self)
+        self.main_layout.insertWidget(0, self.root_btn)
+
         self.ctx_manager = ctx_manager
         if isinstance(main_context, basestring):
             self.get_button(0, main_context)
+
         elif isinstance(main_context, list):
             self.set_full_context(main_context)
 
-        self.root_btn = RootButton(self)
-        self.main_layout.insertWidget(0, self.root_btn)
+        self.root_btn.refresh_bookmarks()
 
         fileObject = QtCore.QFile(':/efesto/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
@@ -160,6 +163,7 @@ class ContextDock(QtGui.QWidget):
 
         if not btn.build_menu_items() == 0:
             return
+
         if not self.ctx_manager.can_be_bookmark(btn.hierarchy):
             return
 
@@ -208,7 +212,6 @@ class RootButton(QtGui.QPushButton):
         self.dock = parent
         self.build_bookmarks()
         self.clicked.connect(self.refresh_bookmarks)
-        self.refresh_bookmarks()
 
         self.context_menu = QtGui.QMenu()
         self.context_menu.triggered.connect(self.on_menu_click)

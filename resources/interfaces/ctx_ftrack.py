@@ -15,7 +15,9 @@ class FtrackContextManager(ContextInterface):
             )
         )
         hierarchy = [x.getName() for x in task.getParents()]
-        return list(reversed(hierarchy))
+        hierarchy.reverse()
+        hierarchy.append(task.getName())
+        return list(hierarchy)
 
     def get_context_data(self, hierarchy):
         import ftrack
