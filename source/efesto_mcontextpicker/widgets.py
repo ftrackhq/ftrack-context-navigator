@@ -176,7 +176,7 @@ class ContextDock(QtGui.QWidget):
 
         for idx, value in enumerate(self.bookmarks):
             self.settings.setArrayIndex(idx)
-            logger.debug('Writting bookmark to settings: %s' % list(value))
+            logger.debug('Writing bookmark to settings: %s' % list(value))
             self.settings.setValue("key", value)
 
         self.settings.endArray()
