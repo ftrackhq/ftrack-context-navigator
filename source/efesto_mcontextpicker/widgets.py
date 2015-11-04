@@ -255,7 +255,7 @@ class RootButton(QtGui.QPushButton):
         '''Refreshes the bookmarks on the current menu.
         '''
         self.bookmarks_menu.clear()
-        for i in self.dock.bookmarks:
+        for i in sorted(self.dock.bookmarks):
             if i[0] != self.dock.buttons[0].ctx:
                 continue
             self.bookmarks_menu.addAction(':'.join(i))
