@@ -38,16 +38,16 @@ class FtrackContextManager(ContextInterface):
 
     def execute(self, hierarchy):
         try:
-            from ftrackplugin import ftrackConnector
+            from ftrackplugin.ftrackConnector import panelcom
         except:
-            from ftrack_connect_maya.connector import Connector as ftrackConnector
+            from ftrack_connect.connector import panelcom
 
         obj = self.get_context_data(hierarchy)
         if obj.dict.get('entityType') == 'task':
             os.environ['FTRACK_TASKID'] = obj.getId()
             os.environ['FTRACK_SHOTID'] = obj.getParent().getId()
 
-        panelComInstance = ftrackConnector.panelcom.PanelComInstance.instance()
+        panelComInstance = panelcom.PanelComInstance.instance()
         panelComInstance.switchedShotListeners()
 
 IFACE = FtrackContextManager
