@@ -37,7 +37,10 @@ class FtrackContextManager(ContextInterface):
         return obj.dict.get('entityType') == 'task'
 
     def execute(self, hierarchy):
-        from ftrackplugin import ftrackConnector
+        try:
+            from ftrackplugin import ftrackConnector
+        except:
+            from ftrack_connect_maya.connector import Connector as ftrackConnector
 
         obj = self.get_context_data(hierarchy)
         if obj.dict.get('entityType') == 'task':
