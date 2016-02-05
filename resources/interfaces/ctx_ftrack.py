@@ -1,6 +1,6 @@
 import os
+from efesto_fstructure.mayadefaultstructure import set_maya_project
 from efesto_mcontextpicker.context import ContextInterface
-
 
 class FtrackContextManager(ContextInterface):
 
@@ -47,6 +47,7 @@ class FtrackContextManager(ContextInterface):
             os.environ['FTRACK_TASKID'] = obj.getId()
             os.environ['FTRACK_SHOTID'] = obj.getParent().getId()
 
+        set_maya_project()
         panelComInstance = panelcom.PanelComInstance.instance()
         panelComInstance.switchedShotListeners()
 

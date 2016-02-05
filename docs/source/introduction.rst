@@ -5,6 +5,7 @@ Introduction
 What's all this about?
 -----------------------
 
+
 This tool aims to ease the workflow in productions where artists have to be switching from one shot/sequence/asset/task to another frequently. The main idea of this software is to be able to change context at any time in a easy and fast way, thus avoiding unnecessary and repetitive actions.
 
 This tool attaches itself to Maya's toolbox and provides a custom context browser as well as bookmarks for previous selected contexts.
@@ -12,6 +13,7 @@ This tool attaches itself to Maya's toolbox and provides a custom context browse
 When initialized, the tools looks like this:
 
 .. image:: _static/tool.png
+   :align: center
 
 
 Installation
@@ -20,7 +22,7 @@ Installation
 Since this is a Maya specific plugin, it is recommended to build the software first, and manually add it to ``PYTHONPATH``, because Maya will not add the system python path's to itself.
 
 .. code-block:: bash
-    
+
     $ python setup.py build
 
 After this, at least one interface must be added, thus ``resources/interfaces`` should be added to ``PYTHONPATH`` as well.
