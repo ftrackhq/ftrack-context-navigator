@@ -12,17 +12,15 @@ def _append_to_env_path(event, env_var, path):
 
 def _is_fstructure_in_python_path(event):
     python_paths = event['data']['options']['env']['PYTHONPATH'].split(os.pathsep)
-    print python_paths
 
-    # todo: a more robust (and slower) solution would be check if a specific file
-    # from fstructure i.e. mayadefaultstructure.py exists.
+    # look for efesto_fstructure/mayadefaultstructure.py on PYTHONPATH
     for path in python_paths:
         test_file = os.path.join(path, "efesto_fstructure", "mayadefaultstructure.py")
-        print "Checking if %s exists" % test_file
         if os.path.exists(test_file):
             print "***Structure plugin found***"
             return True
 
+    print "***Structure plugin NOT found***"
     return False
 
 def register_context_picker(event):
@@ -47,8 +45,7 @@ def register_context_picker(event):
     _append_to_env_path(
         event,
         'EFESTO_CONTEXT_IFACE',
-        os.getenv('EFESTO_CONTEXT_IFACE', default_iface)
-    )
+        os.getenv('EFESTO_CONTEXT_IFACE', default_iface))
 
 def register(registry, *kw):
     if registry is not ftrack.EVENT_HANDLERS:
