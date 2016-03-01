@@ -1,14 +1,9 @@
-import ftrack
 import sys
 import os
 
+import ftrack
+import ftrack_connect.application
 
-def _append_to_env_path(event, env_var, path):
-    if env_var in event['data']['options']['env']:
-        old_path = event['data']['options']['env'][env_var]
-        event['data']['options']['env'][env_var] = os.pathsep.join([old_path, path])
-    else:
-        event['data']['options']['env'][env_var] = path
 
 def _is_fstructure_in_python_path(event):
     python_paths = event['data']['options']['env']['PYTHONPATH'].split(os.pathsep)
@@ -27,25 +22,39 @@ def register_context_picker(event):
     print "Registering context picker!!"
 
     this_dir = os.path.abspath(os.path.dirname(__file__))
+    environment = event['data']['options']['env']
+
     interfaces_path = os.path.normpath(os.path.join(this_dir, "..", "resources", "interfaces"))
-    _append_to_env_path(event, 'PYTHONPATH', interfaces_path)
+    ftrack_connect.application.appendPath(
+        interfaces_path,
+        'PYTHONPATH',
+        environment)
 
     maya_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resources", "maya"))
-    _append_to_env_path(event, 'PYTHONPATH', maya_resources_path)
-    _append_to_env_path(event, 'MAYA_SCRIPT_PATH', maya_resources_path)
+    ftrack_connect.application.appendPath(
+        maya_resources_path,
+        'PYTHONPATH',
+        environment)
+    ftrack_connect.application.appendPath(
+        maya_resources_path,
+        'MAYA_SCRIPT_PATH',
+        environment)
 
     source_path = os.path.normpath(os.path.join(this_dir, '..', 'source'))
-    _append_to_env_path(event, 'PYTHONPATH', source_path)
+    ftrack_connect.application.appendPath(
+        source_path,
+        'PYTHONPATH',
+        environment)
 
     if _is_fstructure_in_python_path(event):
         default_iface = 'ftrack'
     else:
         default_iface = 'filesystem'
 
-    _append_to_env_path(
-        event,
+    ftrack_connect.application.appendPath(
+        os.getenv('EFESTO_CONTEXT_IFACE', default_iface),
         'EFESTO_CONTEXT_IFACE',
-        os.getenv('EFESTO_CONTEXT_IFACE', default_iface))
+        environment)
 
 def register(registry, *kw):
     if registry is not ftrack.EVENT_HANDLERS:
