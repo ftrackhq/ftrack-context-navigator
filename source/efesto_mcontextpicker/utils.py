@@ -1,12 +1,15 @@
 import os
 import sys
-from PySide import QtGui
+from QtExt import QtGui, QtWidgets
+
+from maya import OpenMayaUI as omui
+
 try:
-    # Sphinx
-    from maya import OpenMayaUI as omui
+    # pyside
     from shiboken import wrapInstance
 except:
-    pass
+    # pyside2
+    from shiboken2 import wrapInstance
 
 try:
     import efesto_logger as logging
@@ -34,7 +37,7 @@ def get_widget(widget_name, query_type=None, wrapper=None):
     :returns: An instance of ``wrapper`` with objectName ``widget_name``
 
     '''
-    wrapper = wrapper or QtGui.QWidget
+    wrapper = wrapper or QtWidgets.QWidget
 
     logger.debug('Retrieving widget "%s"' % widget_name)
 

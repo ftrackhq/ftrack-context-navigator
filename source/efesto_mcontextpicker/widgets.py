@@ -1,10 +1,13 @@
-from PySide import QtGui, QtCore
+import re
+from QtExt import QtGui, QtCore, QtWidgets
+
 try:
     # Sphinx
     import resources
 except:
     pass
-import re
+
+
 try:
     import efesto_logger as logging
 except:
@@ -13,7 +16,7 @@ except:
 logger = logging.getLogger(__name__)
 
 
-class ContextDock(QtGui.QWidget):
+class ContextDock(QtWidgets.QWidget):
     def __init__(self, ctx_manager, main_context, parent=None):
         '''
         '''
@@ -38,8 +41,8 @@ class ContextDock(QtGui.QWidget):
 
         self.settings.endArray()
 
-        self.button_widget = QtGui.QWidget(self)
-        self.button_layout = QtGui.QVBoxLayout()
+        self.button_widget = QtWidgets.QWidget(self)
+        self.button_layout = QtWidgets.QVBoxLayout()
         self.button_widget.setLayout(self.button_layout)
         self.button_layout.setContentsMargins(0, 0, 0, 0)
         self.button_layout.setSpacing(3)
