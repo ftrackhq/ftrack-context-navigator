@@ -205,7 +205,7 @@ class ContextDock(QtWidgets.QWidget):
         self.clamp_buttons(len(hierarchy) - 1)
 
 
-class RootButton(QtGui.QPushButton):
+class RootButton(QtWidgets.QPushButton):
     def __init__(self, parent=None):
         '''Button that will serve as bookmark holder and company identifier.
         '''
@@ -216,7 +216,7 @@ class RootButton(QtGui.QPushButton):
         self.build_bookmarks()
         self.clicked.connect(self.refresh_bookmarks)
 
-        self.context_menu = QtGui.QMenu()
+        self.context_menu = QtWidgets.QMenu()
         self.context_menu.triggered.connect(self.on_menu_click)
 
     def mousePressEvent(self, event):
@@ -250,7 +250,7 @@ class RootButton(QtGui.QPushButton):
     def build_bookmarks(self):
         '''Creates the menu and connects it to the button.
         '''
-        self.bookmarks_menu = QtGui.QMenu(self)
+        self.bookmarks_menu = QtWidgets.QMenu(self)
         self.setMenu(self.bookmarks_menu)
         self.bookmarks_menu.triggered.connect(self.on_bookmark_action)
 
@@ -272,7 +272,7 @@ class RootButton(QtGui.QPushButton):
         self.dock.set_full_context(value.split(':'))
 
 
-class ContextButton(QtGui.QPushButton):
+class ContextButton(QtWidgets.QPushButton):
     def __init__(self, ctx=None, parent=None):
         '''Button that will define one step of a context.
 
@@ -290,7 +290,7 @@ class ContextButton(QtGui.QPushButton):
         self.ctx_manager = self.dock.ctx_manager
 
         self.ctx = None or ctx
-        self.context_menu = QtGui.QMenu()
+        self.context_menu = QtWidgets.QMenu()
         self.context_menu.triggered.connect(self.on_menu_click)
 
     def __repr__(self):
@@ -349,7 +349,7 @@ class ContextButton(QtGui.QPushButton):
     def mousePressEvent(self, event):
         '''Qt class override to spawn custom contextual menu.
         '''
-        if event.button() == QtCore.Qt.MouseButton.RightButton:
+        if event.button() == QtWidgets.Qt.MouseButton.RightButton:
             items = self.build_menu_items()
             if items:
                 cursor = QtGui.QCursor()
