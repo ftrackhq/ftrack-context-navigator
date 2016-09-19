@@ -23,7 +23,7 @@ class ContextDock(QtWidgets.QWidget):
         super(ContextDock, self).__init__(parent=parent)
         # Set object name to delete the plugin before when recreating it.
         self.setObjectName('efesto-ctxpick')
-        self.main_layout = QtGui.QVBoxLayout()
+        self.main_layout = QtWidgets.QVBoxLayout()
         self.setLayout(self.main_layout)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(3)
@@ -349,7 +349,7 @@ class ContextButton(QtWidgets.QPushButton):
     def mousePressEvent(self, event):
         '''Qt class override to spawn custom contextual menu.
         '''
-        if event.button() == QtWidgets.Qt.MouseButton.RightButton:
+        if event.button() == QtCore.Qt.MouseButton.RightButton:
             items = self.build_menu_items()
             if items:
                 cursor = QtGui.QCursor()
