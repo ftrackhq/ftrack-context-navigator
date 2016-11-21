@@ -1,4 +1,6 @@
+
 import re
+
 from QtExt import QtGui, QtCore, QtWidgets
 
 try:
@@ -6,7 +8,6 @@ try:
     import resources
 except:
     pass
-
 
 try:
     import efesto_logger as logging

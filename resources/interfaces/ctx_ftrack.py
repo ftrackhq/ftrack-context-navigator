@@ -1,8 +1,16 @@
+
 import os
-from efesto_fstructure.mayadefaultstructure import set_maya_project
+
 from efesto_mcontextpicker.context import ContextInterface
 
+
 class FtrackContextManager(ContextInterface):
+
+    def __init__(self, execute_cb):
+        super(FtrackContextManager, self).__init__(execute_cb)
+
+    def get_interface_name(self):
+        return 'ftrack'
 
     def get_root_context(self):
         import ftrack
@@ -47,7 +55,8 @@ class FtrackContextManager(ContextInterface):
             os.environ['FTRACK_TASKID'] = obj.getId()
             os.environ['FTRACK_SHOTID'] = obj.getParent().getId()
 
-        set_maya_project()
+        self.execute_cb(self.get_interface_name(), hierarchy, None)
+
         panelComInstance = panelcom.PanelComInstance.instance()
         panelComInstance.switchedShotListeners()
 
