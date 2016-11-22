@@ -1,4 +1,13 @@
+
 class ContextInterface(object):
+
+    def __init__(self, execute_cb):
+        self.execute_cb = execute_cb
+
+    def get_interface_name(self):
+        '''Returns the name of this context interface.'''
+        raise NotImplementedError()
+
     def get_root_context(self):
         '''Returns the root context where the plugin will be initialized.
 

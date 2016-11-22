@@ -8,9 +8,9 @@ What's all this about?
 
 This tool aims to ease the workflow in productions where artists have to be switching from one shot/sequence/asset/task to another frequently. The main idea of this software is to be able to change context at any time in a easy and fast way, thus avoiding unnecessary and repetitive actions.
 
-This tool attaches itself to Maya's toolbox and provides a custom context browser as well as bookmarks for previous selected contexts.
+This tool attaches itself to Maya's toolbox or to a Nuke panel and provides a custom context browser as well as bookmarks for previous selected contexts.
 
-When initialized, the tools looks like this:
+When initialized, the tools looks like this in Maya and Nuke:
 
 .. image:: _static/tool.png
    :align: center
@@ -19,7 +19,8 @@ When initialized, the tools looks like this:
 Installation
 ------------
 
-Since this is a Maya specific plugin, it is recommended to build the software first, and manually add it to ``PYTHONPATH``, because Maya will not add the system python path's to itself.
+It is recommended to build the software first, and manually add it to ``PYTHONPATH``,
+because Maya or Nuke will not add the system python path's to itself.
 
 .. code-block:: bash
 
@@ -28,6 +29,7 @@ Since this is a Maya specific plugin, it is recommended to build the software fi
 After this, at least one interface must be added, thus ``resources/interfaces`` should be added to ``PYTHONPATH`` as well.
 
 If you want Maya to start with this tool, add ``resources/maya`` to both ``PYTHONPATH`` and ``MAYA_SCRIPT_PATH``.
+For Nuke, NUKE_PATH should be set to ``resources/nuke``.
 
 .. note::
 
@@ -46,10 +48,26 @@ The rest of the bottom buttons will be the current context. Right cliking on the
     The names are shortened for because of the narrow space. The full names can be seen in the buttons if hovered for a bit of time.
 
 
-How do I decide what's the current project?
--------------------------------------------
+How do I add the tool to Nuke's UI?
+-----------------------------------
 
-When calling the script trough :func:`efesto_mcontextpicker.main`, you can specify a main context, which by default will be the current working directory. By default, the script will initialize the ``FileSystem`` interface, which will basically be a folder explorer, stopping at any folder which contains a ``workspace.mel`` and setting the project to that folder if it's found.
+Right click on Nuke's side bar. Choose Split Vertical.
+
+.. image:: _static/nuke_tool1.png
+   :align: center
+
+Right click on the new panel. Choose Windows -> Custom -> Context Picker.
+
+.. image:: _static/nuke_tool2.png
+   :align: center
+
+The new panel can be saved as part of a workspace using Nuke's Workspace menu.
+
+
+How do I decide what's the current project in Maya?
+---------------------------------------------------
+
+When calling the script trough :func:`efesto_mcontextpicker.mayactxpicker.main`, you can specify a main context, which by default will be the current working directory. By default, the script will initialize the ``FileSystem`` interface, which will basically be a folder explorer, stopping at any folder which contains a ``workspace.mel`` and setting the project to that folder if it's found.
 
 
 How can I delete the saved preferences?

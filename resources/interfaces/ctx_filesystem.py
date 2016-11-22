@@ -1,6 +1,9 @@
+
 import sys
 import os
+
 from efesto_mcontextpicker.context import ContextInterface
+
 try:
     import efesto_logger as logging
 except:
@@ -17,6 +20,13 @@ if not logger.handlers:
 
 
 class FileSystemContextManager(ContextInterface):
+
+    def __init__(self, execute_cb):
+        super(FileSystemContextManager, self).__init__(execute_cb)
+
+    def get_interface_name(self):
+        return 'filesystem'
+
     def get_root_context(self):
         logger.info('Got main context: %s' % os.getcwd())
         return os.getcwd()
@@ -37,11 +47,8 @@ class FileSystemContextManager(ContextInterface):
         return os.path.split(data)[-1]
 
     def execute(self, hierarchy):
-        import maya.mel as mel
         path = os.path.join(*hierarchy)
-        if 'workspace.mel' in os.listdir(path):
-            logger.info('setProject "%s"' % path)
-            mel.eval('setProject "%s"' % path)
+        self.execute_cb(self.get_interface_name(), hierarchy, path)
 
     def can_be_bookmark(self, hierarchy):
         return 'workspace.mel' in os.listdir(os.path.join(*hierarchy))

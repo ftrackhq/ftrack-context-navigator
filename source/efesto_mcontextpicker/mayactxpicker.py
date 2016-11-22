@@ -1,7 +1,8 @@
+
 import os
 import sys
-from QtExt import QtGui, QtWidgets
 
+from QtExt import QtGui, QtWidgets
 from maya import OpenMayaUI as omui
 
 try:
@@ -11,12 +12,21 @@ except:
     # pyside2
     from shiboken2 import wrapInstance
 
+from efesto_mcontextpicker import interfaces
+from efesto_mcontextpicker import widgets
+
 try:
     import efesto_logger as logging
 except:
     import logging
 
 logger = logging.getLogger(__name__)
+
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    level = logging.INFO if not os.getenv('EFESTO_DEBUG') else logging.DEBUG
+    handler.setLevel(level)
+    logger.addHandler(handler)
 
 
 def get_widget(widget_name, query_type=None, wrapper=None):
@@ -78,60 +88,47 @@ def append_toolbox_widget(widget):
     layout_placeholder.layout().addWidget(widget)
 
 
-def discover_ifaces():
-    '''Scans ``sys.path`` to retrieve any module starting with ``ctx_``. All
-    modules found, will be stripped from the prefix and returned.
+def maya_interface_execute_callback(interface_name, hierarchy, path):
+    if interface_name == 'ftrack':
+        from efesto_fstructure.mayadefaultstructure import set_maya_project
+        set_maya_project()
+    elif interface_name == 'filesystem':
+        import os
+        import maya.mel as mel
+        if 'workspace.mel' in os.listdir(path):
+            mel.eval('setProject "%s"' % path)
+    else:
+        raise RuntimeError("Unknown ctx navigator interface type %s" % interface_name)
 
-    :returns: All modules starting with ``ctx_``
-    :rtype: list of str
+
+def main(iface_name='filesystem', main_context=None):
+    ''':param iface_name: Name of the interface. This name will be searched as
+        ``ctx_<name>`` in the ``PYTHONPATH``, and if found, will be used as
+        interface.
+
+    :type iface_name: str
+
+    :param main_context: Force specify the context where the dock will be
+        initialized. If this value is not specified, the interface will run
+        :func:`efesto_mcontextpicker.context.ContextInterface.get_root_context`
+        to retrieve it.
+    :type main_context: str
+
     '''
-    interfaces = []
+    dock = get_widget('efesto-ctxpick')
+    if dock:
+        dock.setParent(None)
 
-    for path in sys.path:
-        if not os.path.isdir(path):
-            continue
-        for module in os.listdir(path):
-            if 'egg' in module or 'dist' in module:
-                module = module.split('-')[0]
-            module = module.split('.')[0]
-            if module.startswith('ctx_'):
-                module = module[4:]
-                interfaces.append(module)
+    hide_maya_help_button()
 
-    logger.debug('Interfaces found %s' % interfaces)
-    return interfaces
+    iface_name = os.getenv('EFESTO_CONTEXT_IFACE') or iface_name
+    if not iface_name:
+        raise ValueError('No interface name specified.')
 
+    iface = interfaces.get_interface(iface_name)
 
-def import_module(module):
-    '''Imports a module and returns it. If not found, ``None`` is returned.
+    ctx_manager = iface(maya_interface_execute_callback)
+    main_context = main_context or ctx_manager.get_root_context()
 
-    :param module: Name of the module to be imported.
-    :type module: str
-
-    :returns: A module
-    :rtype: module or :py:class:`None`
-    '''
-    try:
-        return __import__(module)
-    except Exception as e:
-        logger.warning('Could not import %s: %s' % (module, e))
-
-
-def get_interface(name):
-    '''Retrieves an interface. The interface has to be a module, it's name
-    has to start with ``ctx_``, it has to be in the ``PYTHONPATH`` and it must
-    contain a ``IFACE`` global variable which has to contain an uninitialized
-    interface class. Raises :class:`ValueError` if not found.
-
-    :param name: Name of the interface module to search.
-    :type name: str
-
-    :returns: Interface
-    :rtype: :class:`efesto_mcontextpicker.context.ContextInterface` base class
-    '''
-    interfaces = discover_ifaces()
-    if name not in interfaces:
-        raise ValueError(
-            'Interface ctx_%s could not be found in PYTHONPATH' % name
-        )
-    return import_module('ctx_%s' % name).IFACE
+    dock = widgets.ContextDock(ctx_manager, main_context, 'maya')
+    append_toolbox_widget(dock)

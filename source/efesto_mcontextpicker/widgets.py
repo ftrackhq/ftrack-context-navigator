@@ -1,4 +1,6 @@
+
 import re
+
 from QtExt import QtGui, QtCore, QtWidgets
 
 try:
@@ -6,7 +8,6 @@ try:
     import resources
 except:
     pass
-
 
 try:
     import efesto_logger as logging
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContextDock(QtWidgets.QWidget):
-    def __init__(self, ctx_manager, main_context, parent=None):
+    def __init__(self, ctx_manager, main_context, host_app, parent=None):
         '''
         '''
         super(ContextDock, self).__init__(parent=parent)
@@ -28,7 +29,7 @@ class ContextDock(QtWidgets.QWidget):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(3)
 
-        self.settings = QtCore.QSettings('EfestoLab', 'context_picker')
+        self.settings = QtCore.QSettings('EfestoLab', host_app + '_context_picker')
         self.bookmarks = set()
         self.buttons = []
 
