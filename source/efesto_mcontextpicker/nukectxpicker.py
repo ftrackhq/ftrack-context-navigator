@@ -32,7 +32,7 @@ class NukeContextPickerWidget(QtWidgets.QWidget):
         ctx_manager = iface(nuke_interface_execute_callback)
         main_context = ctx_manager.get_root_context()
 
-        ctx_picker = widgets.ContextDock(ctx_manager, main_context, parent)
+        ctx_picker = widgets.ContextDock(ctx_manager, main_context, 'nuke', parent)
         layout.addWidget(ctx_picker)
 
         spacer = QtWidgets.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)

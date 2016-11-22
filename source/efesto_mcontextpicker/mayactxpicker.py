@@ -130,5 +130,5 @@ def main(iface_name='filesystem', main_context=None):
     ctx_manager = iface(maya_interface_execute_callback)
     main_context = main_context or ctx_manager.get_root_context()
 
-    dock = widgets.ContextDock(ctx_manager, main_context)
+    dock = widgets.ContextDock(ctx_manager, main_context, 'maya')
     append_toolbox_widget(dock)
