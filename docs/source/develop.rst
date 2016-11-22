@@ -31,13 +31,12 @@ How do I choose what interface to use?
 This will be the most basic example of interface usage:
 
 .. code-block:: python
-    
-    import efesto_mcontextpicker
-    efesto_mcontextpicker.main()
+
+    import efesto_mcontextpicker.mayactxpicker
+    efesto_mcontextpicker.mayactxpicker.main()
 
 :func:`efesto_mcontextpicker.main` has two arguments: ``main_context`` and ``iface_name``.
 
 ``iface_name`` is the name of the interface to be used. If you have created a new interface called ``ctx_shotgun.py``, ``shotgun`` should be the specified in this argument. If ``iface_name`` is not set, it will default to ``filesystem``, which means that ``ctx_filesystem.py`` will be loaded. Also, if not specified ``iface_name``, it is possible to use ``EFESTO_CONTEXT_IFACE`` environment variable to drive the interface name.
 
 ``main_context`` is the name of the starting context which the specified interface will process. If this argument is not filled, the interface will call ``get_root_context()`` to find out.
-
