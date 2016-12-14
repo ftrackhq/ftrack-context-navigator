@@ -42,10 +42,8 @@ def register_context_picker_common(event):
     else:
         default_iface = 'filesystem'
 
-    ftrack_connect.application.appendPath(
-        os.getenv('EFESTO_CONTEXT_IFACE', default_iface),
-        'EFESTO_CONTEXT_IFACE',
-        environment)
+    if 'EFESTO_CONTEXT_IFACE' not in environment:
+        environment['EFESTO_CONTEXT_IFACE'] = default_iface
 
 
 def register_maya_context_picker(event):
