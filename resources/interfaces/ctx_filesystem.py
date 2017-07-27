@@ -4,19 +4,8 @@ import os
 
 from efesto_mcontextpicker.context import ContextInterface
 
-try:
-    import efesto_logger as logging
-except:
-    import logging
-
+import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    handler = logging.StreamHandler(sys.stdout)
-    level = logging.INFO if not os.getenv('EFESTO_DEBUG') else logging.DEBUG
-    handler.setLevel(level)
-    logger.addHandler(handler)
 
 
 class FileSystemContextManager(ContextInterface):

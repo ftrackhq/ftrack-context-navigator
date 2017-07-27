@@ -9,11 +9,7 @@ try:
 except:
     pass
 
-try:
-    import efesto_logger as logging
-except:
-    import logging
-
+import logging
 logger = logging.getLogger(__name__)
 
 
