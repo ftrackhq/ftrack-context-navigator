@@ -24,8 +24,6 @@ def _is_fstructure_in_python_path(event):
 
 
 def register_context_picker_common(event):
-    print "Registering common context picker!!"
-
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
@@ -51,8 +49,6 @@ def register_context_picker_common(event):
 
 
 def register_maya_context_picker(event):
-    print "Registering maya context picker!!"
-
     register_context_picker_common(event)
 
     this_dir = os.path.abspath(os.path.dirname(__file__))
@@ -74,8 +70,6 @@ def register_nuke_context_picker(event):
     # Filter out Nuke studio for now.
     if event['data']['application']['identifier'].startswith('nuke_studio'):
         return
-
-    print "Registering nuke context picker!!"
 
     register_context_picker_common(event)
 
