@@ -2,6 +2,9 @@
 import os
 import sys
 
+import logging
+logger = logging.getLogger(__name__)
+
 from QtExt import QtGui, QtWidgets
 from maya import OpenMayaUI as omui
 
@@ -14,19 +17,6 @@ except:
 
 from efesto_mcontextpicker import interfaces
 from efesto_mcontextpicker import widgets
-
-try:
-    import efesto_logger as logging
-except:
-    import logging
-
-logger = logging.getLogger(__name__)
-
-if not logger.handlers:
-    handler = logging.StreamHandler()
-    level = logging.INFO if not os.getenv('EFESTO_DEBUG') else logging.DEBUG
-    handler.setLevel(level)
-    logger.addHandler(handler)
 
 
 def get_widget(widget_name, query_type=None, wrapper=None):

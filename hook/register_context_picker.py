@@ -1,27 +1,29 @@
 import sys
 import os
 
-import ftrack
+import ftrack_api
 import ftrack_connect.application
 
 
 def _is_fstructure_in_python_path(event):
     python_paths = event['data']['options']['env']['PYTHONPATH'].split(os.pathsep)
 
-    # look for efesto_fstructure/mayadefaultstructure.py on PYTHONPATH
+    # look for efesto_fstructure/base/structure.py on PYTHONPATH
     for path in python_paths:
-        test_file = os.path.join(path, "efesto_fstructure", "mayadefaultstructure.py")
+        test_file = os.path.join(
+            path,
+            "efesto_fstructure",
+            "base",
+            "structure.py"
+        )
+
         if os.path.exists(test_file):
-            print "***Structure plugin found***"
             return True
 
-    print "***Structure plugin NOT found***"
     return False
 
 
 def register_context_picker_common(event):
-    print "Registering common context picker!!"
-
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
@@ -47,8 +49,6 @@ def register_context_picker_common(event):
 
 
 def register_maya_context_picker(event):
-    print "Registering maya context picker!!"
-
     register_context_picker_common(event)
 
     this_dir = os.path.abspath(os.path.dirname(__file__))
@@ -71,8 +71,6 @@ def register_nuke_context_picker(event):
     if event['data']['application']['identifier'].startswith('nuke_studio'):
         return
 
-    print "Registering nuke context picker!!"
-
     register_context_picker_common(event)
 
     this_dir = os.path.abspath(os.path.dirname(__file__))
@@ -87,16 +85,16 @@ def register_nuke_context_picker(event):
     )
 
 
-def register(registry, *kw):
-    if registry is not ftrack.EVENT_HANDLERS:
+def register(api_object, *kw):
+    if not isinstance(api_object, ftrack_api.session.Session):
         return
 
-    ftrack.EVENT_HUB.subscribe(
+    api_object.event_hub.subscribe(
         'topic=ftrack.connect.application.launch and data.application.identifier=maya*',
         register_maya_context_picker,
     )
 
-    ftrack.EVENT_HUB.subscribe(
+    api_object.event_hub.subscribe(
         'topic=ftrack.connect.application.launch and data.application.identifier=nuke*',
         register_nuke_context_picker
     )
