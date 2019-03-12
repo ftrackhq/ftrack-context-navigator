@@ -2,7 +2,7 @@
 import sys
 import os
 
-from efesto_mcontextpicker.context import ContextInterface
+from efesto_context_navigator.context import ContextInterface
 
 import logging
 logger = logging.getLogger(__name__)

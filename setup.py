@@ -1,58 +1,121 @@
-import os
-import subprocess
-import sys
-import fileinput
-from setuptools import setup, find_packages
-from distutils.command.build import build
+# :coding: utf-8
+# :copyright: Copyright (c) 2019 ftrack
 
-root_dir = os.path.dirname(__file__)
-source_dir = os.path.join(root_dir, 'source')
-resource_file = os.path.join(root_dir, 'resources', 'ui', 'resource.qrc')
-resource_file_dest = os.path.join(
-    source_dir,
-    'efesto_mcontextpicker',
-    'resources.py'
+
+import os
+import re
+import shutil
+from pip._internal import main as pip_main
+
+from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+import setuptools
+
+ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
+SOURCE_PATH = os.path.join(ROOT_PATH, 'source')
+README_PATH = os.path.join(ROOT_PATH, 'README.rst')
+
+
+HOOK_PATH = os.path.join(
+    ROOT_PATH, 'hook'
+)
+
+RESOURCE_PATH = os.path.join(
+    ROOT_PATH, 'resource'
+)
+
+BUILD_PATH = os.path.join(
+    ROOT_PATH, 'build'
 )
 
 
-class Build(build):
+# Read version from source.
+with open(os.path.join(
+    SOURCE_PATH, 'efesto_context_navigator', '_version.py')
+) as _version_file:
+    VERSION = re.match(
+        r'.*__version__ = \'(.*?)\'', _version_file.read(), re.DOTALL
+    ).group(1)
 
-    def _replace_imports_(self, destination):
-        replace = 'from QtExt import QtCore'
-        for line in fileinput.input(destination, inplace=True):
-            if 'import QtCore' in line:
-                print line.replace(line, replace)
-            else:
-                print line
+STAGING_PATH = os.path.join(
+    BUILD_PATH, 'efesto-context-navigator-{}'.format(VERSION)
+)
+
+
+class BuildPlugin(setuptools.Command):
+    '''Build plugin.'''
+
+    description = 'Download dependencies and build plugin .'
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
 
     def run(self):
-        pyside_rcc_command = 'pyside-rcc'
-        if sys.platform == 'win32':
-            import PySide
-            pyside_rcc_command = os.path.join(
-                os.path.dirname(PySide.__file__),
-                'pyside-rcc.exe'
-            )
+        '''Run the build step.'''
+        # Clean staging path
+        shutil.rmtree(STAGING_PATH, ignore_errors=True)
 
-        subprocess.check_call([
-            pyside_rcc_command,
-            '-o',
-            resource_file_dest,
-            resource_file
-        ])
+        # Copy resource files
+        shutil.copytree(
+            RESOURCE_PATH,
+            os.path.join(STAGING_PATH, 'resource')
+        )
 
-        build.run(self)
-        self.replace__imports_(resource_file)
+        # Copy hook files
+        shutil.copytree(
+            HOOK_PATH,
+            os.path.join(STAGING_PATH, 'hook')
+        )
+
+        pip_main(
+            [
+                'install',
+                '.',
+                '--target',
+                os.path.join(STAGING_PATH, 'dependencies'),
+                '--process-dependency-links'
+            ]
+        )
+
+        result_path = shutil.make_archive(
+            os.path.join(
+                BUILD_PATH,
+                'efesto-context-navigator-{0}'.format(VERSION)
+            ),
+            'zip',
+            STAGING_PATH
+        )
+
+
+# Custom commands.
+class PyTest(TestCommand):
+    '''Pytest command.'''
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        '''Import pytest and run.'''
+        import pytest
+        errno = pytest.main(self.test_args)
+        raise SystemExit(errno)
 
 
 setup(
-    name='efesto-mcontextpicker',
-    version='0.1.0',
-    description='Maya context picker.',
+    name='efesto-context-navigator',
+    version=VERSION,
+    description='Efesto context navigator.',
     url='http://www.efestolab.uk/',
     author='EfestoLab LTD',
     author_email='info@efestolab.uk',
-    packages=find_packages(source_dir),
+    packages=find_packages(SOURCE_PATH),
     setup_requires=[
         'qtext',
     ],
@@ -66,6 +129,7 @@ setup(
         '': 'source'
     },
     cmdclass={
-        'build': Build,
+        'test': PyTest,
+        'build_plugin': BuildPlugin
     },
 )

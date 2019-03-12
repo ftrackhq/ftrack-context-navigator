@@ -7,8 +7,8 @@ from QtExt import QtGui, QtCore, QtWidgets
 import nuke
 import nukescripts
 
-from efesto_mcontextpicker import interfaces
-from efesto_mcontextpicker import widgets
+from efesto_context_navigator import interfaces
+from efesto_context_navigator import widgets
 
 
 def nuke_interface_execute_callback(interface_name, hierarchy, path):

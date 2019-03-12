@@ -15,8 +15,8 @@ except:
     # pyside2
     from shiboken2 import wrapInstance
 
-from efesto_mcontextpicker import interfaces
-from efesto_mcontextpicker import widgets
+from efesto_context_navigator import interfaces
+from efesto_context_navigator import widgets
 
 
 def get_widget(widget_name, query_type=None, wrapper=None):

@@ -27,7 +27,7 @@ def register_context_picker_common(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    interfaces_path = os.path.normpath(os.path.join(this_dir, "..", "resources", "interfaces"))
+    interfaces_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "interfaces"))
     ftrack_connect.application.appendPath(
         interfaces_path,
         'PYTHONPATH',
@@ -54,7 +54,7 @@ def register_maya_context_picker(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    maya_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resources", "maya"))
+    maya_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "maya"))
     ftrack_connect.application.appendPath(
         maya_resources_path,
         'PYTHONPATH',
@@ -76,7 +76,7 @@ def register_nuke_context_picker(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    nuke_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resources", "nuke"))
+    nuke_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "nuke"))
 
     ftrack_connect.application.appendPath(
         nuke_resources_path,
