@@ -2,7 +2,7 @@
 import nuke
 
 try:
-    from efesto_context_navigator.nukectxpicker import createContextPickerPanel, NukeContextPickerWidget
+    from efesto_context_navigator.nuke_navigator import createContextPickerPanel, NukeContextPickerWidget
     paneMenu = nuke.menu('Pane')
     paneMenu.addCommand('Context Picker', createContextPickerPanel)
 except:
