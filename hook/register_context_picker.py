@@ -5,44 +5,40 @@ import ftrack_api
 import ftrack_connect.application
 
 
-def _is_fstructure_in_python_path(event):
-    python_paths = event['data']['options']['env']['PYTHONPATH'].split(os.pathsep)
+plugin_base_dir = os.path.normpath(
+    os.path.join(
+        os.path.abspath(
+            os.path.dirname(__file__)
+        ),
+        '..'
+    )
+)
 
-    # look for efesto_fstructure/base/structure.py on PYTHONPATH
-    for path in python_paths:
-        test_file = os.path.join(
-            path,
-            "efesto_fstructure",
-            "base",
-            "structure.py"
-        )
+resources_path = os.path.join(
+    plugin_base_dir, 'resource'
+)
 
-        if os.path.exists(test_file):
-            return True
-
-    return False
+python_dependencies = os.path.join(
+    plugin_base_dir, 'dependencies'
+)
 
 
 def register_context_picker_common(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    interfaces_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "interfaces"))
+    interfaces_path = os.path.normpath(os.path.join(resources_path, "interfaces"))
     ftrack_connect.application.appendPath(
         interfaces_path,
         'PYTHONPATH',
         environment)
 
-    source_path = os.path.normpath(os.path.join(this_dir, '..', 'source'))
     ftrack_connect.application.appendPath(
-        source_path,
+        python_dependencies,
         'PYTHONPATH',
         environment)
 
-    if _is_fstructure_in_python_path(event):
-        default_iface = 'ftrack'
-    else:
-        default_iface = 'filesystem'
+    default_iface = 'ftrack'
 
     if 'EFESTO_CONTEXT_IFACE' not in environment:
         environment['EFESTO_CONTEXT_IFACE'] = default_iface
@@ -50,11 +46,9 @@ def register_context_picker_common(event):
 
 def register_maya_context_picker(event):
     register_context_picker_common(event)
-
-    this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    maya_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "maya"))
+    maya_resources_path = os.path.normpath(os.path.join(resources_path, "maya"))
     ftrack_connect.application.appendPath(
         maya_resources_path,
         'PYTHONPATH',
@@ -76,7 +70,7 @@ def register_nuke_context_picker(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    nuke_resources_path = os.path.normpath(os.path.join(this_dir, "..", "resource", "nuke"))
+    nuke_resources_path = os.path.normpath(os.path.join(resources_path, "nuke"))
 
     ftrack_connect.application.appendPath(
         nuke_resources_path,

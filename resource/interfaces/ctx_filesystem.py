@@ -1,5 +1,4 @@
 
-import sys
 import os
 
 from efesto_context_navigator.context import ContextInterface

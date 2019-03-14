@@ -79,16 +79,7 @@ def append_toolbox_widget(widget):
 
 
 def maya_interface_execute_callback(interface_name, hierarchy, path):
-    if interface_name == 'ftrack':
-        from efesto_fstructure.mayadefaultstructure import set_maya_project
-        set_maya_project()
-    elif interface_name == 'filesystem':
-        import os
-        import maya.mel as mel
-        if 'workspace.mel' in os.listdir(path):
-            mel.eval('setProject "%s"' % path)
-    else:
-        raise RuntimeError("Unknown ctx navigator interface type %s" % interface_name)
+    pass
 
 
 def main(iface_name='filesystem', main_context=None):
