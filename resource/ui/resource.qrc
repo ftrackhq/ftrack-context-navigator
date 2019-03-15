@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix='efesto'>
-        <file alias='logo'>efesto.png</file>
+    <qresource prefix='ftrack'>
+        <file alias='logo'>ftrack.png</file>
         <file alias='style'>style.css</file>
     </qresource>
 </RCC>

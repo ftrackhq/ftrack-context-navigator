@@ -7,8 +7,8 @@ from QtExt import QtGui, QtCore, QtWidgets
 import nuke
 import nukescripts
 
-from efesto_context_navigator import interfaces
-from efesto_context_navigator import widgets
+from ftrack_context_navigator import interfaces
+from ftrack_context_navigator import widgets
 
 
 def nuke_interface_execute_callback(interface_name, hierarchy, path):
@@ -62,7 +62,7 @@ class NukeContextPickerWidget(QtWidgets.QWidget):
             p = p.parent()
 
 
-NukeContextPickerPanelID = "com.efestolab.context_picker"
+NukeContextPickerPanelID = "com.ftrack.context_picker"
 
 class NukeContextPickerPanel(nukescripts.PythonPanel):
     def __init__(self):

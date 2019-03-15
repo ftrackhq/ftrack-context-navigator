@@ -1,7 +1,7 @@
-efesto_mcontextpicker
+ftrack_mcontextpicker
 =====================
 
 .. toctree::
    :maxdepth: 4
 
-   efesto_mcontextpicker
+   ftrack_mcontextpicker

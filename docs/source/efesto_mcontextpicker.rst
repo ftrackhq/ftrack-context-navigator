@@ -1,29 +1,29 @@
-efesto_mcontextpicker package
+ftrack_mcontextpicker package
 =============================
 
 Submodules
 ----------
 
-efesto_mcontextpicker.context module
+ftrack_mcontextpicker.context module
 ------------------------------------
 
-.. automodule:: efesto_mcontextpicker.context
+.. automodule:: ftrack_mcontextpicker.context
     :members:
     :undoc-members:
     :show-inheritance:
 
-efesto_mcontextpicker.utils module
+ftrack_mcontextpicker.utils module
 ----------------------------------
 
-.. automodule:: efesto_mcontextpicker.utils
+.. automodule:: ftrack_mcontextpicker.utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-efesto_mcontextpicker.widgets module
+ftrack_mcontextpicker.widgets module
 ------------------------------------
 
-.. automodule:: efesto_mcontextpicker.widgets
+.. automodule:: ftrack_mcontextpicker.widgets
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,7 +32,7 @@ efesto_mcontextpicker.widgets module
 Module contents
 ---------------
 
-.. automodule:: efesto_mcontextpicker
+.. automodule:: ftrack_mcontextpicker
     :members:
     :undoc-members:
     :show-inheritance:

@@ -55,7 +55,7 @@ def get_interface(name):
     :type name: str
 
     :returns: Interface
-    :rtype: :class:`efesto_mcontextpicker.context.ContextInterface` base class
+    :rtype: :class:`ftrack_mcontextpicker.context.ContextInterface` base class
     '''
     interfaces = discover_ifaces()
     if name not in interfaces:

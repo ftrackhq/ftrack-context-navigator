@@ -1,7 +1,7 @@
 
 import os
 
-from efesto_context_navigator.context import ContextInterface
+from ftrack_context_navigator.context import ContextInterface
 
 
 class FtrackContextManager(ContextInterface):
@@ -26,7 +26,6 @@ class FtrackContextManager(ContextInterface):
         query_str = 'Context where name is "%s"' % hierarchy[-1]
 
         # Build a query string of the form:
-        # Context where name is "h[0]" and parent.name is "h[1]" and parent.parent.name is "h[2]" ...
         parent_select = 'parent'
         for parent in reversed(hierarchy[:-1]):
             query_str += ' and {0}.name is "{1}"'.format(
@@ -54,10 +53,7 @@ class FtrackContextManager(ContextInterface):
         return obj.get('context_type') == 'task'
 
     def execute(self, hierarchy):
-        try:
-            from ftrackplugin.ftrackConnector import panelcom
-        except:
-            from ftrack_connect.connector import panelcom
+        from ftrack_connect.connector import panelcom
 
         obj = self.get_context_data(hierarchy)
         if obj.get('context_type') == 'task':

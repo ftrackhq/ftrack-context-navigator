@@ -1,7 +1,7 @@
 
 import os
 
-from efesto_context_navigator.context import ContextInterface
+from ftrack_context_navigator.context import ContextInterface
 
 import logging
 logger = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ class FileSystemContextManager(ContextInterface):
         return 'filesystem'
 
     def get_root_context(self):
-        logger.info('Got main context: %s' % os.getcwd())
+        logger.debug('Got main context: %s' % os.getcwd())
         return os.getcwd()
 
     def get_context_data(self, hierarchy):

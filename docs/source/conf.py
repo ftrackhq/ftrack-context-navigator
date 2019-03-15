@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# efesto-context-navigator documentation build configuration file, created by
+# ftrack-context-navigator documentation build configuration file, created by
 # sphinx-quickstart on Tue Aug  4 10:23:31 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -49,7 +49,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'efesto-context-navigator'
+project = u'ftrack-context-navigator'
 copyright = u'2015, EfestoLab LTD'
 author = u'EfestoLab LTD'
 
@@ -208,7 +208,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'efesto-context-navigatordoc'
+htmlhelp_basename = 'ftrack-context-navigatordoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -230,7 +230,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'efesto-context-navigator.tex', u'efesto-context-navigator Documentation',
+  (master_doc, 'ftrack-context-navigator.tex', u'ftrack-context-navigator Documentation',
    u'EfestoLab LTD', 'manual'),
 ]
 
@@ -260,7 +260,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'efesto-context-navigator', u'efesto-context-navigator Documentation',
+    (master_doc, 'ftrack-context-navigator', u'ftrack-context-navigator Documentation',
      [author], 1)
 ]
 
@@ -274,8 +274,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'efesto-context-navigator', u'efesto-context-navigator Documentation',
-   author, 'efesto-context-navigator', 'One line description of project.',
+  (master_doc, 'ftrack-context-navigator', u'ftrack-context-navigator Documentation',
+   author, 'ftrack-context-navigator', 'One line description of project.',
    'Miscellaneous'),
 ]
 

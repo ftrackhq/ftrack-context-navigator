@@ -31,14 +31,14 @@ BUILD_PATH = os.path.join(
 
 # Read version from source.
 with open(os.path.join(
-    SOURCE_PATH, 'efesto_context_navigator', '_version.py')
+    SOURCE_PATH, 'ftrack_context_navigator', '_version.py')
 ) as _version_file:
     VERSION = re.match(
         r'.*__version__ = \'(.*?)\'', _version_file.read(), re.DOTALL
     ).group(1)
 
 STAGING_PATH = os.path.join(
-    BUILD_PATH, 'efesto-context-navigator-{}'.format(VERSION)
+    BUILD_PATH, 'ftrack-context-navigator-{}'.format(VERSION)
 )
 
 
@@ -85,7 +85,7 @@ class BuildPlugin(setuptools.Command):
         result_path = shutil.make_archive(
             os.path.join(
                 BUILD_PATH,
-                'efesto-context-navigator-{0}'.format(VERSION)
+                'ftrack-context-navigator-{0}'.format(VERSION)
             ),
             'zip',
             STAGING_PATH
@@ -109,12 +109,12 @@ class PyTest(TestCommand):
 
 
 setup(
-    name='efesto-context-navigator',
+    name='ftrack-context-navigator',
     version=VERSION,
     description='Efesto context navigator.',
-    url='http://www.efestolab.uk/',
+    url='http://www.ftrack.uk/',
     author='EfestoLab LTD',
-    author_email='info@efestolab.uk',
+    author_email='info@ftrack.uk',
     packages=find_packages(SOURCE_PATH),
     setup_requires=[
         'qtext',

@@ -39,7 +39,7 @@ For Nuke, NUKE_PATH should be set to ``resources/nuke``.
 How do I use this?
 ------------------
 
-The first button, which as the `EfestoLab <http://www.efestolab.uk/>`_ logo will server as a bookmark manager, left cliking on it, will spawn the list of bookmarks available.
+The first button, which as the `EfestoLab <http://www.ftrack.uk/>`_ logo will server as a bookmark manager, left cliking on it, will spawn the list of bookmarks available.
 
 The rest of the bottom buttons will be the current context. Right cliking on them will spawn a menu with their children. Clicking on any item of this menu will generate a new button, and the current context will be set. If the button has no children, it will be considered a leaf thus will be added to the bookmarks list.
 
@@ -67,7 +67,7 @@ The new panel can be saved as part of a workspace using Nuke's Workspace menu.
 How do I decide what's the current project in Maya?
 ---------------------------------------------------
 
-When calling the script trough :func:`efesto_mcontextpicker.mayactxpicker.main`, you can specify a main context, which by default will be the current working directory. By default, the script will initialize the ``FileSystem`` interface, which will basically be a folder explorer, stopping at any folder which contains a ``workspace.mel`` and setting the project to that folder if it's found.
+When calling the script trough :func:`ftrack_mcontextpicker.mayactxpicker.main`, you can specify a main context, which by default will be the current working directory. By default, the script will initialize the ``FileSystem`` interface, which will basically be a folder explorer, stopping at any folder which contains a ``workspace.mel`` and setting the project to that folder if it's found.
 
 
 How can I delete the saved preferences?

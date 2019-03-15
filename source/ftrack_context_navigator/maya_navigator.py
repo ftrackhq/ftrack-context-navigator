@@ -15,8 +15,8 @@ except:
     # pyside2
     from shiboken2 import wrapInstance
 
-from efesto_context_navigator import interfaces
-from efesto_context_navigator import widgets
+from ftrack_context_navigator import interfaces
+from ftrack_context_navigator import widgets
 
 
 def get_widget(widget_name, query_type=None, wrapper=None):
@@ -91,12 +91,12 @@ def main(iface_name='filesystem', main_context=None):
 
     :param main_context: Force specify the context where the dock will be
         initialized. If this value is not specified, the interface will run
-        :func:`efesto_mcontextpicker.context.ContextInterface.get_root_context`
+        :func:`ftrack_mcontextpicker.context.ContextInterface.get_root_context`
         to retrieve it.
     :type main_context: str
 
     '''
-    dock = get_widget('efesto-ctxpick')
+    dock = get_widget('ftrack-ctxpick')
     if dock:
         dock.setParent(None)
 
