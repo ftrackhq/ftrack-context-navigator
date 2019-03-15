@@ -41,4 +41,5 @@ class FileSystemContextManager(ContextInterface):
     def can_be_bookmark(self, hierarchy):
         return 'workspace.mel' in os.listdir(os.path.join(*hierarchy))
 
+
 IFACE = FileSystemContextManager
