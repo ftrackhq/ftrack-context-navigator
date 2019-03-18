@@ -4,7 +4,7 @@ RootButton, ContextButton {
 }
 
 RootButton {
-    border-image: url(':/ftrack/logo') 0 0 0 0 stretch stretch;
+    border-image: url(':/contextnav/logo') 0 0 0 0 stretch stretch;
     color: white;
 }
 ContextButton {

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix='ftrack'>
+    <qresource prefix='contextnav'>
         <file alias='logo'>ftrack.png</file>
         <file alias='style'>style.css</file>
     </qresource>

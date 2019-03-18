@@ -3,7 +3,7 @@ import re
 
 from QtExt import QtGui, QtCore, QtWidgets
 
-import resources
+from ftrack_context_navigator import resources
 
 import logging
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class ContextDock(QtWidgets.QWidget):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(3)
 
-        self.settings = QtCore.QSettings('ftrack-connect', host_app + '_context_picker')
+        self.settings = QtCore.QSettings('ftrack-connect', host_app + '_context_navigator')
         self.bookmarks = set()
         self.buttons = []
 
@@ -53,7 +53,7 @@ class ContextDock(QtWidgets.QWidget):
 
         self.root_btn.refresh_bookmarks()
 
-        fileObject = QtCore.QFile(':/ftrack/style')
+        fileObject = QtCore.QFile(':/contextnav/style')
         fileObject.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
         stream = QtCore.QTextStream(fileObject)
         styleSheetContent = stream.readAll()
