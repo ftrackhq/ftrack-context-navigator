@@ -5,8 +5,8 @@
 import os
 import re
 import shutil
-from pip._internal import main as pip_main
-
+import pip
+from pkg_resources import parse_version
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import setuptools
@@ -14,6 +14,11 @@ import setuptools
 ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
 SOURCE_PATH = os.path.join(ROOT_PATH, 'source')
 README_PATH = os.path.join(ROOT_PATH, 'README.rst')
+from pip._internal import main as pip_main
+
+
+if parse_version(pip.__version__) < parse_version('19.3.0'):
+    raise ValueError('Pip should be version 19.3.0 or higher')
 
 
 HOOK_PATH = os.path.join(
@@ -72,13 +77,12 @@ class BuildPlugin(setuptools.Command):
             os.path.join(STAGING_PATH, 'hook')
         )
 
-        pip_main(
+        pip_main.main(
             [
                 'install',
                 '.',
                 '--target',
                 os.path.join(STAGING_PATH, 'dependencies'),
-                '--process-dependency-links'
             ]
         )
 
@@ -112,18 +116,15 @@ setup(
     name='ftrack-context-navigator',
     version=VERSION,
     description='Efesto context navigator.',
-    url='http://www.ftrack.uk/',
-    author='EfestoLab LTD',
-    author_email='info@ftrack.uk',
+    url='http://www.ftrack.com/',
+    author='lorenzo.angeli@ftrack.com',
+    author_email='info@ftrack.com',
     packages=find_packages(SOURCE_PATH),
     setup_requires=[
         'qtext',
     ],
     install_requires=[
-        'qtext'
-    ],
-    dependency_links=[
-        'git+https://bitbucket.org/ftrack/qtext/get/0.1.0.zip#egg=QtExt-0.1.0'
+        'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'
     ],
     package_dir={
         '': 'source'
