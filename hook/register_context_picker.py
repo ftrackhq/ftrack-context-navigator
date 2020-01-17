@@ -27,21 +27,10 @@ def register_context_picker_common(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
-    interfaces_path = os.path.normpath(os.path.join(resources_path, "interfaces"))
-    ftrack_connect.application.appendPath(
-        interfaces_path,
-        'PYTHONPATH',
-        environment)
-
     ftrack_connect.application.appendPath(
         python_dependencies,
         'PYTHONPATH',
         environment)
-
-    default_iface = 'ftrack'
-
-    if 'EFESTO_CONTEXT_IFACE' not in environment:
-        environment['EFESTO_CONTEXT_IFACE'] = default_iface
 
 
 def register_maya_context_picker(event):

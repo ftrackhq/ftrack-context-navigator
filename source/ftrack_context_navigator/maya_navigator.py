@@ -3,7 +3,7 @@ import os
 import sys
 
 import logging
-logger = logging.getLogger(__name__)
+import ftrack_api
 
 from QtExt import QtGui, QtWidgets
 from maya import OpenMayaUI as omui
@@ -17,7 +17,9 @@ except:
 
 from ftrack_context_navigator import interfaces
 from ftrack_context_navigator import widgets
+from ftrack_context_navigator import context
 
+logger = logging.getLogger(__name__)
 
 def get_widget(widget_name, query_type=None, wrapper=None):
     '''Retrieve the widget within Maya based in it's objectName.
@@ -102,13 +104,8 @@ def main(iface_name='filesystem', main_context=None):
 
     hide_maya_help_button()
 
-    iface_name = os.getenv('EFESTO_CONTEXT_IFACE') or iface_name
-    if not iface_name:
-        raise ValueError('No interface name specified.')
-
-    iface = interfaces.get_interface(iface_name)
-
-    ctx_manager = iface(maya_interface_execute_callback)
+    session = ftrack_api.Session()
+    ctx_manager = context.Context(session, maya_interface_execute_callback)
     main_context = main_context or ctx_manager.get_root_context()
 
     dock = widgets.ContextDock(ctx_manager, main_context, 'maya')

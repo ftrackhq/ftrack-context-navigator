@@ -3,12 +3,14 @@ import os
 import sys
 
 from QtExt import QtGui, QtCore, QtWidgets
+import ftrack_api
 
 import nuke
 import nukescripts
 
 from ftrack_context_navigator import interfaces
 from ftrack_context_navigator import widgets
+from ftrack_context_navigator import context
 
 
 def nuke_interface_execute_callback(interface_name, hierarchy, path):
@@ -23,13 +25,8 @@ class NukeContextPickerWidget(QtWidgets.QWidget):
         layout.setContentsMargins(2, 2, 2, 2)
         layout.setAlignment(QtCore.Qt.AlignLeft)
 
-        iface_name = os.getenv('EFESTO_CONTEXT_IFACE') or 'filesystem'
-        if not iface_name:
-            raise ValueError('No interface name specified.')
-
-        iface = interfaces.get_interface(iface_name)
-
-        ctx_manager = iface(nuke_interface_execute_callback)
+        session = ftrack_api.Session()
+        ctx_manager = context.Context(session, nuke_interface_execute_callback)
         main_context = ctx_manager.get_root_context()
 
         ctx_picker = widgets.ContextDock(ctx_manager, main_context, 'nuke', parent)
