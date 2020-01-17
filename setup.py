@@ -120,9 +120,6 @@ setup(
     author='lorenzo.angeli@ftrack.com',
     author_email='info@ftrack.com',
     packages=find_packages(SOURCE_PATH),
-    setup_requires=[
-        'qtext',
-    ],
     install_requires=[
         'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'
     ],
