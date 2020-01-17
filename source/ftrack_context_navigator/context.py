@@ -1,14 +1,27 @@
-
+import re
 import logging
+import unicodedata
 
 
 class ContextInterface(object):
 
     def __init__(self, execute_cb):
+        self.illegal_character_substitute = ''
         self.execute_cb = execute_cb
         self.logger = logging.getLogger(
             '{0}.{1}'.format(__name__, self.__class__.__name__)
         )
+
+    def sanitise_for_filesystem(self, value):
+        if self.illegal_character_substitute is None:
+            return value
+
+        if isinstance(value, str):
+            value = value.decode('utf-8')
+
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+        value = re.sub('([^a-zA-Z0-9._]+)', self.illegal_character_substitute, value)
+        return unicode(value.strip().lower())
 
     def get_interface_name(self):
         '''Returns the name of this context interface.'''

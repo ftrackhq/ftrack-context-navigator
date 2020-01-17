@@ -18,7 +18,8 @@ class FtrackContextManager(ContextInterface):
         import ftrack_api
         id = os.getenv('FTRACK_CONTEXTID', os.getenv('FTRACK_TASKID', os.getenv('FTRACK_SHOTID')))
         task = self.session.get('Context', id)
-        hierarchy = [x['name'] for x in task['link']]
+        hierarchy = [self.sanitise_for_filesystem(x['name']) for x in task['link']]
+        self.logger.info('hierarchy :{}'.format(hierarchy))
         return hierarchy
 
     def get_context_data(self, hierarchy):
