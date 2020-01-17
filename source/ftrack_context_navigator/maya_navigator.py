@@ -83,7 +83,7 @@ def maya_interface_execute_callback(interface_name, hierarchy, path):
     pass
 
 
-def main(iface_name='filesystem', main_context=None):
+def main(main_context=None):
     ''':param iface_name: Name of the interface. This name will be searched as
         ``ctx_<name>`` in the ``PYTHONPATH``, and if found, will be used as
         interface.
