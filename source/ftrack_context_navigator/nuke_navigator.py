@@ -2,7 +2,7 @@
 import os
 import sys
 
-from Qt import QtGui, QtCore, QtWidgets
+from QtExt import QtGui, QtCore, QtWidgets
 import ftrack_api
 
 import nuke

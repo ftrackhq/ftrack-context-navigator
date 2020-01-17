@@ -122,7 +122,7 @@ setup(
     packages=find_packages(SOURCE_PATH),
     install_requires=[
         'appdirs',
-        'qt.py >=1.0.0, < 2'
+        'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'
     ],
     package_dir={
         '': 'source'

@@ -1,7 +1,7 @@
 
 import re
 
-from Qt import QtGui, QtCore, QtWidgets
+from QtExt import QtGui, QtCore, QtWidgets
 
 from ftrack_context_navigator import resources
 
