@@ -1,8 +1,14 @@
 
+import logging
+
+
 class ContextInterface(object):
 
     def __init__(self, execute_cb):
         self.execute_cb = execute_cb
+        self.logger = logging.getLogger(
+            '{0}.{1}'.format(__name__, self.__class__.__name__)
+        )
 
     def get_interface_name(self):
         '''Returns the name of this context interface.'''

@@ -25,6 +25,7 @@ class FtrackContextManager(ContextInterface):
         import ftrack_api
         query_str = 'Context where name is "%s"' % hierarchy[-1]
 
+
         # Build a query string of the form:
         parent_select = 'parent'
         for parent in reversed(hierarchy[:-1]):
@@ -33,7 +34,9 @@ class FtrackContextManager(ContextInterface):
             )
             parent_select += '.parent'
 
-        return self.session.query(query_str).one()
+        self.logger.debug(query_str)
+
+        return self.session.query(query_str).first()
 
     def get_children(self, obj):
         result = [x['name'] for x in obj['children']]
@@ -53,7 +56,6 @@ class FtrackContextManager(ContextInterface):
         return obj.get('context_type') == 'task'
 
     def execute(self, hierarchy):
-        from ftrack_connect.connector import panelcom
 
         obj = self.get_context_data(hierarchy)
         if obj.get('context_type') == 'task':
@@ -64,8 +66,11 @@ class FtrackContextManager(ContextInterface):
             os.environ['FTRACK_SHOTID'] = obj['id']
 
         self.execute_cb(self.get_interface_name(), hierarchy, None)
-
-        panelComInstance = panelcom.PanelComInstance.instance()
-        panelComInstance.switchedShotListeners()
+        try:
+            from ftrack_connect.connector import panelcom
+            panelComInstance = panelcom.PanelComInstance.instance()
+            panelComInstance.switchedShotListeners()
+        except Exception:
+            self.logger.warning('Ftrack connect does not seems to be installed.')
 
 IFACE = FtrackContextManager
