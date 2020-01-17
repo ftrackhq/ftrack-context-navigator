@@ -8,7 +8,6 @@ import ftrack_api
 import nuke
 import nukescripts
 
-from ftrack_context_navigator import interfaces
 from ftrack_context_navigator import widgets
 from ftrack_context_navigator import context
 

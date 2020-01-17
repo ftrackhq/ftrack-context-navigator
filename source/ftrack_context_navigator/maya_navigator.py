@@ -15,7 +15,6 @@ except:
     # pyside2
     from shiboken2 import wrapInstance
 
-from ftrack_context_navigator import interfaces
 from ftrack_context_navigator import widgets
 from ftrack_context_navigator import context
 
