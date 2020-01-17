@@ -23,6 +23,7 @@ class Context(object):
             value = value.decode('utf-8')
 
         value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+        value = value.replace(' ', '_')
         value = re.sub('([^a-zA-Z0-9._]+)', self.illegal_character_substitute, value)
         return unicode(value.strip().lower())
 
