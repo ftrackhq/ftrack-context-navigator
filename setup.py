@@ -121,7 +121,8 @@ setup(
     author_email='info@ftrack.com',
     packages=find_packages(SOURCE_PATH),
     install_requires=[
-        'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'
+        'appdirs',
+        'qt.py >=1.0.0, < 2'
     ],
     package_dir={
         '': 'source'

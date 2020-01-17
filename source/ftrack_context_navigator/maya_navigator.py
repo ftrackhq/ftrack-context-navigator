@@ -5,7 +5,7 @@ import sys
 import logging
 import ftrack_api
 
-from QtExt import QtGui, QtWidgets
+from Qt import QtGui, QtWidgets
 from maya import OpenMayaUI as omui
 
 try:
