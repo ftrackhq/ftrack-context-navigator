@@ -125,7 +125,7 @@ class PyTest(TestCommand):
 setup(
     name='ftrack-context-navigator',
     version=VERSION,
-    description='Efesto context navigator.',
+    description='ftrack context navigator.',
     url='http://www.ftrack.com/',
     author='ftrack',
     author_email='support@ftrack.com',
