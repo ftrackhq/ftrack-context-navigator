@@ -63,7 +63,6 @@ class BuildPlugin(setuptools.Command):
     def run(self):
         '''Run the build step.'''
         # Clean staging path
-        self.run_command('build_sphinx')
 
         shutil.rmtree(STAGING_PATH, ignore_errors=True)
 
@@ -78,6 +77,9 @@ class BuildPlugin(setuptools.Command):
             HOOK_PATH,
             os.path.join(STAGING_PATH, 'hook')
         )
+
+        # build docs
+        self.run_command('build_sphinx')
 
         # Move docs in folder
         shutil.move(
