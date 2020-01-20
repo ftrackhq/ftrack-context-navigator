@@ -22,6 +22,7 @@ from ftrack_context_navigator import context
 
 logger = logging.getLogger(__name__)
 
+
 def get_widget(widget_name, query_type=None, wrapper=None):
     '''Retrieve the widget within Maya based in it's objectName.
 

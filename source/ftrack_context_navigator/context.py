@@ -5,7 +5,6 @@ import os
 import re
 import logging
 import unicodedata
-import ftrack_api
 
 
 class Context(object):

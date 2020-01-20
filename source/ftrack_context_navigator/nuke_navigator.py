@@ -59,6 +59,7 @@ class NukeContextPickerWidget(QtWidgets.QWidget):
 
 NukeContextPickerPanelID = "com.ftrack.context_picker"
 
+
 class NukeContextPickerPanel(nukescripts.PythonPanel):
     def __init__(self):
         super(NukeContextPickerPanel, self).__init__("CtxPicker", NukeContextPickerPanelID)
