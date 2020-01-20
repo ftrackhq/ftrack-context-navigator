@@ -1,8 +1,6 @@
 context package
 ===============
 
-Submodules
-----------
 
 ftrack_context_navigator.context module
 ---------------------------------------
@@ -22,10 +20,19 @@ ftrack_context_navigator.widgets module
     :show-inheritance:
 
 
-Module contents
----------------
+ftrack_context_navigator.maya_navigator module
+----------------------------------------------
 
-.. automodule:: ftrack_context_navigator
+.. automodule:: ftrack_context_navigator.maya_navigator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+ftrack_context_navigator.nuke_navigator module
+----------------------------------------------
+
+.. automodule:: ftrack_context_navigator.nuke_navigator
     :members:
     :undoc-members:
     :show-inheritance:

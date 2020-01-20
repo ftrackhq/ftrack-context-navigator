@@ -20,7 +20,7 @@ import shlex
 import re
 
 autodoc_mock_imports = [
-    'QtExt'
+    'QtExt', 'nuke', 'maya', 'nukescripts', 'shiboken2', 'shiboken'
 ]
 
 # If extensions (or modules to document with autodoc) are in another directory,
