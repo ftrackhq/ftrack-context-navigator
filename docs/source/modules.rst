@@ -1,7 +1,7 @@
-ftrack_mcontextpicker
-=====================
+context
+=======
 
 .. toctree::
    :maxdepth: 4
 
-   ftrack_mcontextpicker
+   context

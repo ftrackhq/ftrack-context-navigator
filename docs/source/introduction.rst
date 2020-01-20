@@ -19,21 +19,15 @@ When initialized, the tools looks like this in Maya and Nuke:
 Installation
 ------------
 
-It is recommended to build the software first, and manually add it to ``PYTHONPATH``,
-because Maya or Nuke will not add the system python path's to itself.
+build from sources :
 
 .. code-block:: bash
 
-    $ python setup.py build
+    $ python setup.py build_plugin
 
-After this, at least one interface must be added, thus ``resources/interfaces`` should be added to ``PYTHONPATH`` as well.
 
-If you want Maya to start with this tool, add ``resources/maya`` to both ``PYTHONPATH`` and ``MAYA_SCRIPT_PATH``.
-For Nuke, NUKE_PATH should be set to ``resources/nuke``.
+Once built install in in the ftrack connect's plugin folder.
 
-.. note::
-
-    If no arguments specified when initializing the software, ``FileSystem`` interface will be picked up, and the current working directory will be the starting point, in Windows, most likely Maya's installation path. It is recommended to specify a starting point.
 
 
 How do I use this?
@@ -62,12 +56,6 @@ Right click on the new panel. Choose Windows -> Custom -> Context Picker.
    :align: center
 
 The new panel can be saved as part of a workspace using Nuke's Workspace menu.
-
-
-How do I decide what's the current project in Maya?
----------------------------------------------------
-
-When calling the script trough :func:`ftrack_mcontextpicker.mayactxpicker.main`, you can specify a main context, which by default will be the current working directory. By default, the script will initialize the ``FileSystem`` interface, which will basically be a folder explorer, stopping at any folder which contains a ``workspace.mel`` and setting the project to that folder if it's found.
 
 
 How can I delete the saved preferences?

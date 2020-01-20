@@ -86,7 +86,7 @@ class BuildPlugin(setuptools.Command):
             ]
         )
 
-        result_path = shutil.make_archive(
+        shutil.make_archive(
             os.path.join(
                 BUILD_PATH,
                 'ftrack-context-navigator-{0}'.format(VERSION)
@@ -117,9 +117,13 @@ setup(
     version=VERSION,
     description='Efesto context navigator.',
     url='http://www.ftrack.com/',
-    author='lorenzo.angeli@ftrack.com',
-    author_email='info@ftrack.com',
+    author='ftrack',
+    author_email='support@ftrack.com',
     packages=find_packages(SOURCE_PATH),
+    setup_requires= [
+        'sphinx >= 1.2.2, < 2',
+        'sphinx_rtd_theme >= 0.1.6, < 1'
+    ],
     install_requires=[
         'appdirs',
         'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'

@@ -16,10 +16,16 @@ import sys
 import os
 import shlex
 
+autodoc_mock_imports = [
+    'QtExt'
+]
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'source')))
+sys.path.insert(0, os.path.abspath(os.path.join('..', '..', '.eggs')))
+
 
 # -- General configuration ------------------------------------------------
 
@@ -50,8 +56,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'ftrack-context-navigator'
-copyright = u'2015, EfestoLab LTD'
-author = u'EfestoLab LTD'
+copyright = u'2019, ftrack AB'
+author = u'ftrack'
 
 intersphinx_mapping = {
     'python': ('http://python.readthedocs.org/en/v2.7.2/', None),
@@ -231,7 +237,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'ftrack-context-navigator.tex', u'ftrack-context-navigator Documentation',
-   u'EfestoLab LTD', 'manual'),
+   u'ftrack AB', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -275,7 +281,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, 'ftrack-context-navigator', u'ftrack-context-navigator Documentation',
-   author, 'ftrack-context-navigator', 'One line description of project.',
+   author, 'ftrack-context-navigator', 'Easy context management from integrated dcc applications',
    'Miscellaneous'),
 ]
 
