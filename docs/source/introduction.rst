@@ -33,7 +33,7 @@ Once built install in in the ftrack connect's plugin folder.
 How do I use this?
 ------------------
 
-The first button, which as the `EfestoLab <http://www.ftrack.uk/>`_ logo will server as a bookmark manager, left cliking on it, will spawn the list of bookmarks available.
+The first button, which as the `ftrack <http://www.ftrack.uk/>`_ logo will server as a bookmark manager, left cliking on it, will spawn the list of bookmarks available.
 
 The rest of the bottom buttons will be the current context. Right cliking on them will spawn a menu with their children. Clicking on any item of this menu will generate a new button, and the current context will be set. If the button has no children, it will be considered a leaf thus will be added to the bookmarks list.
 
