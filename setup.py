@@ -63,6 +63,8 @@ class BuildPlugin(setuptools.Command):
     def run(self):
         '''Run the build step.'''
         # Clean staging path
+        self.run_command('build_sphinx')
+
         shutil.rmtree(STAGING_PATH, ignore_errors=True)
 
         # Copy resource files
@@ -75,6 +77,12 @@ class BuildPlugin(setuptools.Command):
         shutil.copytree(
             HOOK_PATH,
             os.path.join(STAGING_PATH, 'hook')
+        )
+
+        # Move docs in folder
+        shutil.move(
+            os.path.join(BUILD_PATH, 'docs'),
+            os.path.join(STAGING_PATH, 'docs'),
         )
 
         pip_main.main(
