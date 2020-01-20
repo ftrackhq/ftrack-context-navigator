@@ -13,6 +13,7 @@ Contents:
 
    introduction
    modules
+   changelog
 
 
 Indices and tables

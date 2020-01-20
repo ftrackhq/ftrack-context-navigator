@@ -1,5 +1,5 @@
 # :coding: utf-8
-# :copyright: Copyright (c) 2019 ftrack
+# :copyright: Copyright (c) 2020 ftrack
 
 
 import os
@@ -81,7 +81,7 @@ class BuildPlugin(setuptools.Command):
         # build docs
         self.run_command('build_sphinx')
 
-        # Move docs in folder
+        # Move docs to plugin dir
         shutil.move(
             os.path.join(BUILD_PATH, 'docs'),
             os.path.join(STAGING_PATH, 'docs'),
@@ -132,7 +132,8 @@ setup(
     packages=find_packages(SOURCE_PATH),
     setup_requires= [
         'sphinx >= 1.2.2, < 2',
-        'sphinx_rtd_theme >= 0.1.6, < 1'
+        'sphinx_rtd_theme >= 0.1.6, < 1',
+        'lowdown >= 0.1.0, < 2'
     ],
     install_requires=[
         'appdirs',

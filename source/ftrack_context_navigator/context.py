@@ -1,3 +1,6 @@
+# :coding: utf-8
+# :copyright: Copyright (c) 2020 ftrack
+
 import os
 import re
 import logging

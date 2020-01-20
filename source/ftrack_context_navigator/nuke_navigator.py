@@ -1,6 +1,5 @@
-
-import os
-import sys
+# :coding: utf-8
+# :copyright: Copyright (c) 2020 ftrack
 
 from QtExt import QtGui, QtCore, QtWidgets
 import ftrack_api

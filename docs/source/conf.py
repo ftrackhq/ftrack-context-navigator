@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+# :coding: utf-8
+# :copyright: Copyright (c) 2020 ftrack
+
 #
 # ftrack-context-navigator documentation build configuration file, created by
 # sphinx-quickstart on Tue Aug  4 10:23:31 2015.
@@ -37,7 +39,11 @@ sys.path.insert(0, os.path.abspath(os.path.join('..', '..', '.eggs')))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx'
+    'sphinx.ext.extlinks',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
+    'lowdown'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

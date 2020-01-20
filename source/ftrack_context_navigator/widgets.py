@@ -1,8 +1,9 @@
+# :coding: utf-8
+# :copyright: Copyright (c) 2020 ftrack
 
 import re
 
 from QtExt import QtGui, QtCore, QtWidgets
-
 from ftrack_context_navigator import resources
 
 import logging
