@@ -23,7 +23,7 @@ python_dependencies = os.path.join(
 )
 
 
-def register_context_picker_common(event):
+def register_context_navigator_common(event):
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
 
@@ -33,8 +33,8 @@ def register_context_picker_common(event):
         environment)
 
 
-def register_maya_context_picker(event):
-    register_context_picker_common(event)
+def register_maya_context_navigator(event):
+    register_context_navigator_common(event)
     environment = event['data']['options']['env']
 
     maya_resources_path = os.path.normpath(os.path.join(resources_path, "maya"))
@@ -49,12 +49,12 @@ def register_maya_context_picker(event):
         environment)
 
 
-def register_nuke_context_picker(event):
+def register_nuke_context_navigator(event):
     # Filter out Nuke studio for now.
     if event['data']['application']['identifier'].startswith('nuke_studio'):
         return
 
-    register_context_picker_common(event)
+    register_context_navigator_common(event)
 
     this_dir = os.path.abspath(os.path.dirname(__file__))
     environment = event['data']['options']['env']
@@ -74,10 +74,10 @@ def register(api_object, *kw):
 
     api_object.event_hub.subscribe(
         'topic=ftrack.connect.application.launch and data.application.identifier=maya*',
-        register_maya_context_picker,
+        register_maya_context_navigator,
     )
 
     api_object.event_hub.subscribe(
         'topic=ftrack.connect.application.launch and data.application.identifier=nuke*',
-        register_nuke_context_picker
+        register_nuke_context_navigator
     )
