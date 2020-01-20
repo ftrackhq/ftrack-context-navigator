@@ -1,5 +1,5 @@
-context package
-===============
+ftrack_context_navigator package
+================================
 
 
 ftrack_context_navigator.context module
